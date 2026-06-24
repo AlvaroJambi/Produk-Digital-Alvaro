@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Interaktif Canva - Product Alvaro</title>
+    <title>Game Interaktif Canva - Liburan Seru</title>
     <style>
         * {
             box-sizing: border-box;
@@ -13,7 +13,13 @@
         }
 
         body {
-            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            /* Latar belakang tema pantai matahari terbenam/liburan seru */
+            background: linear-gradient(135deg, #fef08a 0%, #bae6fd 50%, #7dd3fc 100%);
+            background-image: linear-gradient(to bottom, rgba(2, 132, 199, 0.2), rgba(253, 186, 116, 0.4)), 
+                              url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: #333;
             min-height: 100vh;
             display: flex;
@@ -22,141 +28,158 @@
             padding: 20px;
         }
 
-        .container {
-            max-width: 1100px;
+        /* CONTAINER UTAMA MOCKUP HP/APP */
+        .app-container {
             width: 100%;
-            background: white;
-            border-radius: 24px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            overflow: hidden;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            max-width: 430px; /* Ukuran proporsional layar HP panjang */
+            height: 850px;
+            background: #bae6fd;
+            border-radius: 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+            border: 8px solid #334155;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            background-image: linear-gradient(to bottom, #e0f2fe, #bae6fd);
         }
 
-        /* Bagian Kiri (Informasi Produk) */
-        .left-panel {
-            padding: 40px;
-            background: linear-gradient(to bottom, #ffffff, #f0f9ff);
+        /* 1. TAMPILAN AWAL (INPUT NAMA) */
+        #welcome-screen {
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
+            height: 100%;
+            padding: 30px;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(2, 132, 199, 0.1));
         }
 
-        .brand {
-            color: #0369a1;
-            font-weight: bold;
-            font-size: 1.2rem;
+        .card-input {
+            background: white;
+            width: 100%;
+            padding: 35px 25px;
+            border-radius: 24px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            border: 2px solid #e2e8f0;
+        }
+
+        .card-input h1 {
+            color: #1d4ed8;
+            font-size: 2rem;
             margin-bottom: 10px;
-        }
-
-        .tag-game {
-            background-color: #ff477e;
-            color: white;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-            display: inline-block;
-            width: fit-content;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-        }
-
-        h1 {
-            color: #0284c7;
-            font-size: 2.5rem;
-            line-height: 1.2;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-        }
-
-        .highlight-text {
-            color: #ef4444;
-            font-size: 2.3rem;
             font-weight: 800;
-            margin-bottom: 15px;
         }
 
-        .badge-kelas {
-            background-color: #0284c7;
-            color: white;
-            padding: 5px 20px;
-            border-radius: 15px;
-            display: inline-block;
-            font-weight: bold;
+        .card-input p {
+            color: #475569;
+            font-size: 0.95rem;
+            line-height: 1.4;
             margin-bottom: 25px;
         }
 
-        .features {
-            list-style: none;
-            margin-bottom: 30px;
-        }
-
-        .features li {
-            margin-bottom: 12px;
+        .label-nama {
+            display: block;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 10px;
             font-size: 1.05rem;
-            display: flex;
-            align-items: center;
-            font-weight: 600;
         }
 
-        .features li::before {
-            content: "✓";
-            color: white;
-            background-color: #22c55e;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 12px;
-            font-size: 0.8rem;
-        }
-
-        .cta-box {
-            background-color: #fef08a;
-            border: 2px dashed #ca8a04;
-            padding: 15px;
+        .input-nama {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #cbd5e1;
             border-radius: 12px;
+            font-size: 1rem;
             text-align: center;
-            font-weight: bold;
-            color: #854d0e;
+            margin-bottom: 20px;
+            outline: none;
+            transition: border-color 0.2s;
         }
 
-        /* Bagian Kanan (Preview Game / Mockup) */
-        .right-panel {
-            background: #0284c7;
-            padding: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .input-nama:focus {
+            border-color: #2563eb;
+        }
+
+        .btn-mulai {
+            width: 100%;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+            transition: background 0.2s;
+        }
+
+        .btn-mulai:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* 2. TAMPILAN UTAMA GAME (SEBENTAR DI-HIDE) */
+        #game-screen {
+            display: none; /* Sembunyi di awal */
+            flex-direction: column;
+            height: 100%;
+            padding: 15px;
             position: relative;
         }
 
-        .mockup-phone {
-            background: white;
-            width: 100%;
-            max-width: 360px;
-            border-radius: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            padding: 20px;
-            border: 8px solid #334155;
-        }
-
-        .game-header {
-            background-color: #f97316;
+        .game-header-wood {
+            background-color: #ca8a04;
             color: white;
             text-align: center;
-            padding: 10px;
-            border-radius: 12px;
+            padding: 12px;
+            border-radius: 16px;
+            font-weight: 900;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            border: 3px solid #fef08a;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sub-header-pink {
+            background-color: #f43f5e;
+            color: white;
+            text-align: center;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            align-self: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Sapaan Nama Pemain */
+        .player-badge {
+            background-color: #0284c7;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
         }
 
         .match-container {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+            flex-grow: 1;
         }
 
         .match-row {
@@ -166,133 +189,174 @@
         }
 
         .item-box {
-            width: 45%;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 8px;
+            width: 44%;
+            border: 2px solid #ffffff;
+            border-radius: 16px;
+            padding: 6px;
             text-align: center;
-            background: #f8fafc;
-            font-size: 0.85rem;
+            background: #ffffff;
+            font-size: 0.8rem;
             font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
 
         .item-box img {
             width: 100%;
-            height: 70px;
+            height: 75px;
             object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 5px;
-            background-color: #cbd5e1; /* Placeholder warna abu-abu */
+            border-radius: 12px;
+            margin-bottom: 4px;
         }
 
-        .line {
+        .dot-line-container {
             flex-grow: 1;
-            border-bottom: 2px dashed #94a3b8;
-            margin: 0 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin: 0 5px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: #000;
+            border-radius: 50%;
+            border: 2px solid #fff;
+        }
+
+        .line-dashed {
+            flex-grow: 1;
+            border-bottom: 2px dashed #334155;
             height: 1px;
         }
 
-        /* Footer Benefit / Tema */
-        .themes-footer {
-            grid-column: span 2;
-            background-color: #fdba74;
-            padding: 20px;
+        /* Banner Bawah */
+        .footer-banner {
+            background-color: #f43f5e;
+            color: white;
             text-align: center;
+            padding: 10px;
+            border-radius: 14px;
             font-weight: bold;
-            color: #7c2d12;
-            border-top: 4px solid #f97316;
-        }
-
-        /* Responsive Breakpoints */
-        @media (max-width: 768px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-            .right-panel {
-                order: -1; /* Gambar muncul di atas pada layar HP */
-            }
-            .themes-footer {
-                grid-column: span 1;
-            }
+            font-size: 1rem;
+            margin-top: 10px;
+            text-transform: uppercase;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <div class="app-container">
         
-        <div class="left-panel">
-            <div class="brand">A+ PRODUCT ALVARO</div>
-            <div class="tag-game">GAME INTERAKTIF CANVA</div>
-            <h1>COCOKKAN GAMBAR</h1>
-            <div class="highlight-text">DENGAN GAMBAR</div>
-            <div>
-                <span class="badge-kelas">TEMA: LIBURAN SERU (KELAS 1 SD)</span>
-            </div>
-            
-            <ul class="features">
-                <li>20 Soal Interaktif</li>
-                <li>Menjodohkan Gambar dengan Gambar</li>
-                <li>Ilustrasi 3D Kartun Lucu</li>
-                <li>Belajar Jadi Lebih Menyenangkan!</li>
-            </ul>
-
-            <div class="cta-box">
-                SIAP PAKAI DI CANVA!<br>
-                <span style="font-size: 0.9rem; font-weight: normal;">Cocok di HP, Tablet, dan Laptop</span>
+        <div id="welcome-screen">
+            <div class="card-input">
+                <h1>Ayo Liburan</h1>
+                <p>Mencocokkan Kartu di Kolam A dengan di Kolam B</p>
+                
+                <label class="label-nama" for="username">Siapa namamu?</label>
+                <input type="text" id="username" class="input-nama" placeholder="Ketik namamu..." autocomplete="off">
+                
+                <button class="btn-mulai" onclick="mulaiGame()">Mulai Main!</button>
             </div>
         </div>
 
-        <div class="right-panel">
-            <div class="mockup-phone">
-                <div class="game-header">LIBURAN SERU</div>
-                
-                <div class="match-container">
-                    <div class="match-row">
-                        <div class="item-box">
-                            <img src="https://via.placeholder.com/150/skyblue/white?text=Pantai" alt="Pantai">
-                            Pantai
-                        </div>
-                        <div class="line"></div>
-                        <div class="item-box">
-                            <img src="https://via.placeholder.com/150/orange/white?text=Topi" alt="Topi Pantai">
-                            Topi Pantai
-                        </div>
+        <div id="game-screen">
+            <div id="greeting" class="player-badge">Halo, Pemain! Selamat Bermain!</div>
+            
+            <div class="game-header-wood">LIBURAN SERU</div>
+            <div class="sub-header-pink">⭐ Pasangkan gambar yang sesuai! ⭐</div>
+            
+            <div class="match-container">
+                <div class="match-row">
+                    <div class="item-box">
+                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=150&q=80" alt="Pantai">
+                        Pantai
                     </div>
-
-                    <div class="match-row">
-                        <div class="item-box">
-                            <img src="https://via.placeholder.com/150/blue/white?text=Kolam" alt="Kolam Renang">
-                            Kolam Renang
-                        </div>
-                        <div class="line"></div>
-                        <div class="item-box">
-                            <img src="https://via.placeholder.com/150/pink/white?text=Pelampung" alt="Pelampung">
-                            Pelampung
-                        </div>
+                    <div class="dot-line-container">
+                        <div class="dot"></div>
+                        <div class="line-dashed"></div>
+                        <div class="dot"></div>
                     </div>
-                    
-                    <div class="match-row">
-                        <div class="item-box">
-                            <img src="https://via.placeholder.com/150/green/white?text=Gunung" alt="Gunung">
-                            Gunung
-                        </div>
-                        <div class="line"></div>
-                        <div class="item-box">
-                            <img src="https://via.placeholder.com/150/red/white?text=Jaket" alt="Jaket">
-                            Jaket
-                        </div>
+                    <div class="item-box">
+                        <img src="https://images.unsplash.com/photo-1533468432434-200de3b5d528?auto=format&fit=crop&w=150&q=80" alt="Topi Pantai">
+                        Topi Pantai
                     </div>
                 </div>
 
+                <div class="match-row">
+                    <div class="item-box">
+                        <img src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?auto=format&fit=crop&w=150&q=80" alt="Kolam Renang">
+                        Kolam Renang
+                    </div>
+                    <div class="dot-line-container">
+                        <div class="dot"></div>
+                        <div class="line-dashed"></div>
+                        <div class="dot"></div>
+                    </div>
+                    <div class="item-box">
+                        <img src="https://images.unsplash.com/photo-1562240020-ce31ccb0fa7d?auto=format&fit=crop&w=150&q=80" alt="Pelampung">
+                        Pelampung
+                    </div>
+                </div>
+                
+                <div class="match-row">
+                    <div class="item-box">
+                        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=150&q=80" alt="Gunung">
+                        Gunung
+                    </div>
+                    <div class="dot-line-container">
+                        <div class="dot"></div>
+                        <div class="line-dashed"></div>
+                        <div class="dot"></div>
+                    </div>
+                    <div class="item-box">
+                        <img src="https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&w=150&q=80" alt="Jaket">
+                        Jaket
+                    </div>
+                </div>
+
+                <div class="match-row">
+                    <div class="item-box">
+                        <img src="https://images.unsplash.com/photo-1590377435114-1e0388df2fc3?auto=format&fit=crop&w=150&q=80" alt="Piknik">
+                        Piknik
+                    </div>
+                    <div class="dot-line-container">
+                        <div class="dot"></div>
+                        <div class="line-dashed"></div>
+                        <div class="dot"></div>
+                    </div>
+                    <div class="item-box">
+                        <img src="https://images.unsplash.com/photo-1621644782054-998811894a82?auto=format&fit=crop&w=150&q=80" alt="Tikar">
+                        Tikar
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-banner">
+                Belajar Asyik Saat Liburan!
             </div>
         </div>
 
-        <div class="themes-footer">
-            10 TEMA SERU DALAM 1 PAKET! (Tempat & Kendaraan, Aktivitas, Cuaca, Hobi, Makanan, dll.)
-        </div>
-
     </div>
+
+    <script>
+        function mulaiGame() {
+            var nama = document.getElementById('username').value.trim();
+            
+            if(nama === "") {
+                alert("Silakan masukkan namamu terlebih dahulu ya!");
+                return;
+            }
+            
+            // 1. Update teks sapaan dengan nama anak
+            document.getElementById('greeting').innerText = "Halo " + nama + ", Selamat Bermain! ✨";
+            
+            // 2. Sembunyikan layar awal & Tampilkan layar game
+            document.getElementById('welcome-screen').style.display = 'none';
+            document.getElementById('game-screen').style.display = 'flex';
+        }
+    </script>
 
 </body>
 </html>
