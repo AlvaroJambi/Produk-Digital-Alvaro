@@ -1,76 +1,298 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Product Alvaro Prototype</title>
-<style>
-body{font-family:Arial,sans-serif;margin:0;background:linear-gradient(#cfefff,#ffffff);}
-.screen{display:none;padding:20px;text-align:center}
-.active{display:block}
-.card{background:white;border-radius:16px;padding:15px;margin:10px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
-button{padding:12px 20px;border:none;border-radius:12px;background:#1e88e5;color:white;font-size:18px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:700px;margin:auto}
-.drop,.drag{padding:12px;border:2px dashed #999;border-radius:12px;background:#fff}
-.ok{background:#c8f7c5}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Interaktif Canva - Product Alvaro</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        /* Bagian Kiri (Informasi Produk) */
+        .left-panel {
+            padding: 40px;
+            background: linear-gradient(to bottom, #ffffff, #f0f9ff);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .brand {
+            color: #0369a1;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .tag-game {
+            background-color: #ff477e;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            width: fit-content;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        h1 {
+            color: #0284c7;
+            font-size: 2.5rem;
+            line-height: 1.2;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .highlight-text {
+            color: #ef4444;
+            font-size: 2.3rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .badge-kelas {
+            background-color: #0284c7;
+            color: white;
+            padding: 5px 20px;
+            border-radius: 15px;
+            display: inline-block;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .features li {
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .features li::before {
+            content: "✓";
+            color: white;
+            background-color: #22c55e;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 12px;
+            font-size: 0.8rem;
+        }
+
+        .cta-box {
+            background-color: #fef08a;
+            border: 2px dashed #ca8a04;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: bold;
+            color: #854d0e;
+        }
+
+        /* Bagian Kanan (Preview Game / Mockup) */
+        .right-panel {
+            background: #0284c7;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .mockup-phone {
+            background: white;
+            width: 100%;
+            max-width: 360px;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            padding: 20px;
+            border: 8px solid #334155;
+        }
+
+        .game-header {
+            background-color: #f97316;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 12px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .match-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .match-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .item-box {
+            width: 45%;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 8px;
+            text-align: center;
+            background: #f8fafc;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .item-box img {
+            width: 100%;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            background-color: #cbd5e1; /* Placeholder warna abu-abu */
+        }
+
+        .line {
+            flex-grow: 1;
+            border-bottom: 2px dashed #94a3b8;
+            margin: 0 10px;
+            height: 1px;
+        }
+
+        /* Footer Benefit / Tema */
+        .themes-footer {
+            grid-column: span 2;
+            background-color: #fdba74;
+            padding: 20px;
+            text-align: center;
+            font-weight: bold;
+            color: #7c2d12;
+            border-top: 4px solid #f97316;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .right-panel {
+                order: -1; /* Gambar muncul di atas pada layar HP */
+            }
+            .themes-footer {
+                grid-column: span 1;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<div id="home" class="screen active">
-<h1>PRODUCT ALVARO</h1>
-<p>Prototype EduGames</p>
-<button onclick="show('kelas')">Mulai Bermain</button>
-</div>
+    <div class="container">
+        
+        <div class="left-panel">
+            <div class="brand">A+ PRODUCT ALVARO</div>
+            <div class="tag-game">GAME INTERAKTIF CANVA</div>
+            <h1>COCOKKAN GAMBAR</h1>
+            <div class="highlight-text">DENGAN GAMBAR</div>
+            <div>
+                <span class="badge-kelas">TEMA: LIBURAN SERU (KELAS 1 SD)</span>
+            </div>
+            
+            <ul class="features">
+                <li>20 Soal Interaktif</li>
+                <li>Menjodohkan Gambar dengan Gambar</li>
+                <li>Ilustrasi 3D Kartun Lucu</li>
+                <li>Belajar Jadi Lebih Menyenangkan!</li>
+            </ul>
 
-<div id="kelas" class="screen">
-<h2>Kelas 1</h2>
-<div class="card">🐘 Hewan</div>
-<button onclick="show('game')">Masuk Game</button>
-</div>
+            <div class="cta-box">
+                SIAP PAKAI DI CANVA!<br>
+                <span style="font-size: 0.9rem; font-weight: normal;">Cocok di HP, Tablet, dan Laptop</span>
+            </div>
+        </div>
 
-<div id="game" class="screen">
-<h2>Cocokkan Hewan dengan Makanannya</h2>
-<p>Seret makanan ke hewan yang sesuai.</p>
+        <div class="right-panel">
+            <div class="mockup-phone">
+                <div class="game-header">LIBURAN SERU</div>
+                
+                <div class="match-container">
+                    <div class="match-row">
+                        <div class="item-box">
+                            <img src="https://via.placeholder.com/150/skyblue/white?text=Pantai" alt="Pantai">
+                            Pantai
+                        </div>
+                        <div class="line"></div>
+                        <div class="item-box">
+                            <img src="https://via.placeholder.com/150/orange/white?text=Topi" alt="Topi Pantai">
+                            Topi Pantai
+                        </div>
+                    </div>
 
-<div class="grid">
-<div class="drop" data-a="wortel">🐰 Kelinci</div>
-<div draggable="true" class="drag" data-v="wortel">🥕 Wortel</div>
+                    <div class="match-row">
+                        <div class="item-box">
+                            <img src="https://via.placeholder.com/150/blue/white?text=Kolam" alt="Kolam Renang">
+                            Kolam Renang
+                        </div>
+                        <div class="line"></div>
+                        <div class="item-box">
+                            <img src="https://via.placeholder.com/150/pink/white?text=Pelampung" alt="Pelampung">
+                            Pelampung
+                        </div>
+                    </div>
+                    
+                    <div class="match-row">
+                        <div class="item-box">
+                            <img src="https://via.placeholder.com/150/green/white?text=Gunung" alt="Gunung">
+                            Gunung
+                        </div>
+                        <div class="line"></div>
+                        <div class="item-box">
+                            <img src="https://via.placeholder.com/150/red/white?text=Jaket" alt="Jaket">
+                            Jaket
+                        </div>
+                    </div>
+                </div>
 
-<div class="drop" data-a="pisang">🐵 Monyet</div>
-<div draggable="true" class="drag" data-v="pisang">🍌 Pisang</div>
+            </div>
+        </div>
 
-<div class="drop" data-a="rumput">🐄 Sapi</div>
-<div draggable="true" class="drag" data-v="rumput">🌿 Rumput</div>
+        <div class="themes-footer">
+            10 TEMA SERU DALAM 1 PAKET! (Tempat & Kendaraan, Aktivitas, Cuaca, Hobi, Makanan, dll.)
+        </div>
 
-<div class="drop" data-a="bambu">🐼 Panda</div>
-<div draggable="true" class="drag" data-v="bambu">🎋 Bambu</div>
-</div>
-<p id="score">Benar: 0/4</p>
-</div>
+    </div>
 
-<script>
-function show(id){
- document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));
- document.getElementById(id).classList.add('active');
-}
-let dragVal=null, score=0;
-document.querySelectorAll('.drag').forEach(d=>{
- d.addEventListener('dragstart',()=>dragVal=d.dataset.v);
-});
-document.querySelectorAll('.drop').forEach(t=>{
- t.addEventListener('dragover',e=>e.preventDefault());
- t.addEventListener('drop',e=>{
-   e.preventDefault();
-   if(t.dataset.a===dragVal && !t.classList.contains('ok')){
-      t.classList.add('ok');
-      score++;
-      document.getElementById('score').innerText='Benar: '+score+'/4';
-      if(score===4){ alert('🏆 Hebat! Semua jawaban benar!'); }
-   }
- });
-});
-</script>
 </body>
 </html>
