@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Product Alvaro Prototype</title>
+<style>
+body{font-family:Arial,sans-serif;margin:0;background:linear-gradient(#cfefff,#ffffff);}
+.screen{display:none;padding:20px;text-align:center}
+.active{display:block}
+.card{background:white;border-radius:16px;padding:15px;margin:10px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+button{padding:12px 20px;border:none;border-radius:12px;background:#1e88e5;color:white;font-size:18px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:700px;margin:auto}
+.drop,.drag{padding:12px;border:2px dashed #999;border-radius:12px;background:#fff}
+.ok{background:#c8f7c5}
+</style>
+</head>
+<body>
+
+<div id="home" class="screen active">
+<h1>PRODUCT ALVARO</h1>
+<p>Prototype EduGames</p>
+<button onclick="show('kelas')">Mulai Bermain</button>
+</div>
+
+<div id="kelas" class="screen">
+<h2>Kelas 1</h2>
+<div class="card">🐘 Hewan</div>
+<button onclick="show('game')">Masuk Game</button>
+</div>
+
+<div id="game" class="screen">
+<h2>Cocokkan Hewan dengan Makanannya</h2>
+<p>Seret makanan ke hewan yang sesuai.</p>
+
+<div class="grid">
+<div class="drop" data-a="wortel">🐰 Kelinci</div>
+<div draggable="true" class="drag" data-v="wortel">🥕 Wortel</div>
+
+<div class="drop" data-a="pisang">🐵 Monyet</div>
+<div draggable="true" class="drag" data-v="pisang">🍌 Pisang</div>
+
+<div class="drop" data-a="rumput">🐄 Sapi</div>
+<div draggable="true" class="drag" data-v="rumput">🌿 Rumput</div>
+
+<div class="drop" data-a="bambu">🐼 Panda</div>
+<div draggable="true" class="drag" data-v="bambu">🎋 Bambu</div>
+</div>
+<p id="score">Benar: 0/4</p>
+</div>
+
+<script>
+function show(id){
+ document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+}
+let dragVal=null, score=0;
+document.querySelectorAll('.drag').forEach(d=>{
+ d.addEventListener('dragstart',()=>dragVal=d.dataset.v);
+});
+document.querySelectorAll('.drop').forEach(t=>{
+ t.addEventListener('dragover',e=>e.preventDefault());
+ t.addEventListener('drop',e=>{
+   e.preventDefault();
+   if(t.dataset.a===dragVal && !t.classList.contains('ok')){
+      t.classList.add('ok');
+      score++;
+      document.getElementById('score').innerText='Benar: '+score+'/4';
+      if(score===4){ alert('🏆 Hebat! Semua jawaban benar!'); }
+   }
+ });
+});
+</script>
+</body>
+</html>
