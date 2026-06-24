@@ -37,7 +37,7 @@
             flex-direction: column;
         }
 
-        /* 1. LAYAR LOGIN (FULL PUTIH) */
+        /* 1. LAYAR LOGIN (FULL PUTIH TANPA BACKGROUND) */
         #welcome-screen {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -153,14 +153,14 @@
             margin-top: 10px;
         }
 
-        /* Canvas untuk menggambar garis diletakkan di atas elemen */
+        /* Canvas untuk menggambar garis interaktif */
         #line-canvas {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: auto; /* Izinkan interaksi mouse/sentuh */
+            pointer-events: auto;
             z-index: 5;
         }
 
@@ -289,7 +289,7 @@
         
         <div id="welcome-screen">
             <h1>Ayo Liburan</h1>
-            <p>Mencocokkan Gambar di Kolam Kiri dengan Kanan</p>
+            <p>Mencocokkan Kartu di Kolam A dengan di Kolam B</p>
             
             <label class="label-nama">Siapa namamu?</label>
             <input type="text" id="username" class="input-nama" placeholder="Ketik namamu..." autocomplete="off">
@@ -307,22 +307,22 @@
 
                 <div class="column left-col">
                     <div class="item-card" id="left-1">
-                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=150&auto=format&fit=crop&q=60" alt="Pantai">
+                        <img src="Pantai.jpeg" alt="Pantai">
                         Pantai
                         <div class="dot" data-id="1" data-match="topi"></div>
                     </div>
                     <div class="item-card" id="left-2">
-                        <img src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?w=150&auto=format&fit=crop&q=60" alt="Kolam Renang">
+                        <img src="Kolam.jpeg" alt="Kolam Renang">
                         Kolam Renang
                         <div class="dot" data-id="2" data-match="pelampung"></div>
                     </div>
                     <div class="item-card" id="left-3">
-                        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=150&auto=format&fit=crop&q=60" alt="Gunung">
+                        <img src="Gunung.jpeg" alt="Gunung">
                         Gunung
                         <div class="dot" data-id="3" data-match="jaket"></div>
                     </div>
                     <div class="item-card" id="left-4">
-                        <img src="https://images.unsplash.com/photo-1590377435114-1e0388df2fc3?w=150&auto=format&fit=crop&q=60" alt="Piknik">
+                        <img src="Piknik.jpeg" alt="Piknik">
                         Piknik
                         <div class="dot" data-id="4" data-match="tikar"></div>
                     </div>
@@ -330,22 +330,22 @@
 
                 <div class="column right-col">
                     <div class="item-card" id="right-pelampung">
-                        <img src="https://images.unsplash.com/photo-1562240020-ce31ccb0fa7d?w=150&auto=format&fit=crop&q=60" alt="Pelampung">
+                        <img src="Pelampung.jpeg" alt="Pelampung">
                         Pelampung
                         <div class="dot" data-name="pelampung"></div>
                     </div>
                     <div class="item-card" id="right-tikar">
-                        <img src="https://images.unsplash.com/photo-1621644782054-998811894a82?w=150&auto=format&fit=crop&q=60" alt="Tikar">
+                        <img src="Tikar.jpeg" alt="Tikar">
                         Tikar
                         <div class="dot" data-name="tikar"></div>
                     </div>
                     <div class="item-card" id="right-topi">
-                        <img src="https://images.unsplash.com/photo-1533468432434-200de3b5d528?w=150&auto=format&fit=crop&q=60" alt="Topi Pantai">
+                        <img src="Topi Pantai.jpeg" alt="Topi Pantai">
                         Topi Pantai
                         <div class="dot" data-name="topi"></div>
                     </div>
                     <div class="item-card" id="right-jaket">
-                        <img src="https://images.unsplash.com/photo-1548883354-7622d03aca27?w=150&auto=format&fit=crop&q=60" alt="Jaket">
+                        <img src="Jaket.jpeg" alt="Jaket">
                         Jaket
                         <div class="dot" data-name="jaket"></div>
                     </div>
@@ -377,7 +377,6 @@
         let startDot = null;
         let currentMousePos = { x: 0, y: 0 };
         
-        // Menyimpan daftar garis yang sudah benar dan terkunci
         let lockedLines = []; 
 
         function mulaiGame() {
@@ -390,7 +389,6 @@
             document.getElementById('game-screen').style.display = 'flex';
             document.getElementById('score-text').innerText = `Pemain: ${namaPemain} | Skor: ${skor} / ${totalSoal}`;
             
-            // Atur resolusi internal canvas agar pas dengan wadahnya
             setTimeout(resizeCanvas, 100);
         }
 
@@ -402,7 +400,6 @@
 
         window.addEventListener('resize', resizeCanvas);
 
-        // Cari tahu koordinat absolut titik pusat elemen lingkaran hitam (dot) relatif terhadap koordinat canvas
         function getDotCenter(dotElement) {
             const canvasRect = canvas.getBoundingClientRect();
             const dotRect = dotElement.getBoundingClientRect();
@@ -412,7 +409,6 @@
             };
         }
 
-        // Event handling klik/sentuh
         function getEventPos(e) {
             const rect = canvas.getBoundingClientRect();
             const clientX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -425,13 +421,11 @@
 
         function handleStart(e) {
             const pos = getEventPos(e);
-            // Cek apakah klik/sentuhan mengenai titik di kolom kiri
             const leftDots = document.querySelectorAll('.left-col .dot');
             leftDots.forEach(dot => {
                 const center = getDotCenter(dot);
                 const dist = Math.hypot(pos.x - center.x, pos.y - center.y);
                 
-                // Jika klik dalam jangkauan titik hitam (radius sekitar 15px) dan belum sukses dipasangkan
                 if (dist < 20 && !dot.classList.contains('matched')) {
                     IsDrawing = true;
                     startDot = dot;
@@ -452,19 +446,16 @@
             IsDrawing = false;
 
             const rightDots = document.querySelectorAll('.right-col .dot');
-            let matched = false;
 
             rightDots.forEach(targetDot => {
                 const center = getDotCenter(targetDot);
                 const dist = Math.hypot(currentMousePos.x - center.x, currentMousePos.y - center.y);
 
-                // Cek jika lepas klik tepat di atas target pasangan titik kanan
                 if (dist < 25) {
                     const kuncianKiri = startDot.getAttribute('data-match');
                     const namaKanan = targetDot.getAttribute('data-name');
 
                     if (kuncianKiri === namaKanan && !targetDot.classList.contains('matched')) {
-                        // JAWABAN BENAR! Kunci garisnya
                         startDot.classList.add('matched');
                         targetDot.classList.add('matched');
                         
@@ -475,9 +466,7 @@
 
                         skor++;
                         document.getElementById('score-text').innerText = `Pemain: ${namaPemain} | Skor: ${skor} / ${totalSoal}`;
-                        matched = true;
 
-                        // Cek status menang total
                         if (skor === totalSoal) {
                             pemicuMenang();
                         }
@@ -489,13 +478,12 @@
             drawEverything();
         }
 
-        // Render ulang canvas (Garis yang dibuat jalan terus + garis-garis yang sudah dikunci)
         function drawEverything() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // 1. Gambar semua garis permanen yang sudah sukses ditarik sebelumnya
+            // Gambar semua garis permanen (Jawaban Benar)
             ctx.lineWidth = 4;
-            ctx.strokeStyle = "#22c55e"; // Warna Hijau untuk garis sukses
+            ctx.strokeStyle = "#22c55e"; 
             lockedLines.forEach(line => {
                 ctx.beginPath();
                 ctx.moveTo(line.from.x, line.from.y);
@@ -503,21 +491,20 @@
                 ctx.stroke();
             });
 
-            // 2. Gambar garis transisi yang sedang ditarik jari/mouse saat ini
+            // Gambar garis interaktif saat ditarik
             if (IsDrawing && startDot) {
                 const startPt = getDotCenter(startDot);
                 ctx.lineWidth = 4;
-                ctx.strokeStyle = "#334155"; // Abu-abu gelap saat ditarik
-                ctx.setLineDash([6, 4]); // Efek garis putus-putus dramatis
+                ctx.strokeStyle = "#334155"; 
+                ctx.setLineDash([6, 4]); 
                 ctx.beginPath();
                 ctx.moveTo(startPt.x, startPt.y);
                 ctx.lineTo(currentMousePos.x, currentMousePos.y);
                 ctx.stroke();
-                ctx.setLineDash([]); // Reset ke garis normal
+                ctx.setLineDash([]); 
             }
         }
 
-        // Pasangkan listener interaktif ke Canvas
         canvas.addEventListener('mousedown', handleStart);
         canvas.addEventListener('mousemove', handleMove);
         window.addEventListener('mouseup', handleEnd);
@@ -531,7 +518,6 @@
             document.getElementById('win-message').innerHTML = `SELAMAT <span style="color:#e11d48; font-size:1.4rem;">${namaPemain.toUpperCase()}</span>,<br>KAMU SANGAT PINTAR!!! 🌟`;
             document.getElementById('win-popup').style.display = 'flex';
             
-            // Efek ledakan kembang api kertas warna-warni secara berkala
             let duration = 3 * 1000;
             let end = Date.now() + duration;
 
